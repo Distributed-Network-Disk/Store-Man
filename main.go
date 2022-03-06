@@ -17,6 +17,7 @@ package main
 import (
 	"Store-Man/client"
 	"Store-Man/config"
+	"Store-Man/db"
 	"Store-Man/stornode"
 	"flag"
 	"fmt"
@@ -27,18 +28,20 @@ import (
 )
 
 var (
-	Config config.CONF
+	Config      config.CONF
+	Show_Banner bool
 )
 
-func main() {
-	var (
-		Show_Banner bool
-	)
-	runtime.GOMAXPROCS(20)
-
+func init() {
 	flag.IntVar(&Config.ListenPort, "port", 9999, "port")
 	flag.IntVar(&Config.AliveTimeout, "timeout", 300, "timeout (s)")
+	flag.StringVar(&Config.SqliteName, "sqlite", "FragmentObj.db", "db")
 	flag.BoolVar(&Show_Banner, "v", false, "show banner")
+}
+
+func main() {
+	runtime.GOMAXPROCS(20)
+
 	flag.Parse()
 
 	if Show_Banner {
@@ -47,13 +50,19 @@ func main() {
 	}
 
 	stornode.Config = Config
+	db.Config = Config
 
 	gin.SetMode(gin.ReleaseMode)
-	storman := gin.New()
-
-	storman.GET("/ping", client.Ping)
-
-	storman.GET("/nodeping", stornode.Ping)
+	storman := gin.Default()
+	clientapi := storman.Group("/api/client")
+	{
+		clientapi.GET("/ping", client.Ping)
+		clientapi.GET("/list", client.ListPath)
+	}
+	stornodeapi := storman.Group("/api/stornode")
+	{
+		stornodeapi.GET("/ping", stornode.Ping)
+	}
 
 	storman.Run(":" + strconv.Itoa(Config.ListenPort))
 }

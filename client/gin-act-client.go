@@ -15,10 +15,22 @@ package client
 // limitations under the License.
 
 import (
+	"Store-Man/db"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
 func Ping(c *gin.Context) {
-	c.Writer.WriteString("pong")
-	c.Done()
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "pong"})
+}
+
+func ListPath(c *gin.Context) {
+	path := c.Param("path")
+	files := db.DBGetFileName(path)
+	if len(files) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "No files in the path."})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": files})
 }

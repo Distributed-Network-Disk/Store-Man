@@ -15,6 +15,7 @@ package stornode
 // limitations under the License.
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,5 @@ func Ping(c *gin.Context) {
 	stornodeip := c.Query("stornodeip")
 	stornodelistenport := c.Query("stornodelistenport")
 	AliveNode[stornodeip+":"+stornodelistenport] = time.Now()
-	c.Writer.WriteString("pong")
-	c.Done()
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "pong"})
 }
