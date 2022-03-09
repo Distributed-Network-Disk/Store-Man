@@ -1,0 +1,11 @@
+[package]
+name = "store-man"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["totoroyyw <totoro@yyw.moe>"]
+repository = "https://github.com/Distributed-Network-Disk/Store-Man"
+
+[dependencies]
+actix-web = "4.0"
+actix-rt = "2.6"
