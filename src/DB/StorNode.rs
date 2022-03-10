@@ -1,5 +1,3 @@
-package main
-
 // Copyright [2022] [totoroyyw]
 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,3 +11,33 @@ package main
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+#[derive(Clone)]
+pub struct StorNode {
+    pub id: i32,
+    pub ip: String,
+    pub port: i32,
+    pub is_online: bool,
+    pub all_size: i32,
+    pub left_size: i32,
+}
+
+impl DeviceItem {
+    pub fn init(
+        id: i32,
+        ip: String,
+        port: i32,
+        is_online: bool,
+        all_size: i32,
+        left_size: i32,
+    ) -> Self {
+        DeviceItem {
+            id: id,
+            ip: ip,
+            port: port,
+            is_online: is_online,
+            all_size: all_size,
+            left_size: left_size,
+        }
+    }
+}
