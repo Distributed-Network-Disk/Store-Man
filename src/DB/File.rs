@@ -13,31 +13,40 @@
 // limitations under the License.
 
 #[derive(Clone)]
-pub struct StorNode {
+pub struct File {
     pub id: i32,
-    pub ip: String,
-    pub port: i32,
-    pub is_online: bool,
-    pub all_size: i32,
-    pub left_size: i32,
+    pub name: String,
+    pub path: String,
+    pub attribute: String,
+    pub time: i64,
+    pub is_folder: bool,
+    pub file_type: String,
+    pub file_size: i32,
+    pub fraction_num: i32,
 }
 
-impl StorNode {
+impl File {
     pub fn init(
         id: i32,
-        ip: String,
-        port: i32,
-        is_online: bool,
-        all_size: i32,
-        left_size: i32,
+        name: String,
+        path: String,
+        attribute: String,
+        time: i64,
+        is_folder: bool,
+        file_type: String,
+        file_size: i32,
+        fraction_num: i32,
     ) -> Self {
-        StorNode {
-            id: id,
-            ip: ip,
-            port: port,
-            is_online: is_online,
-            all_size: all_size,
-            left_size: left_size,
+        File {
+            id,
+            name,
+            path,
+            attribute,
+            time,
+            is_folder,
+            file_type,
+            file_size,
+            fraction_num,
         }
     }
 }
